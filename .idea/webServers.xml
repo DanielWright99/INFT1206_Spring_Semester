@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3d823ae3-2f8d-430e-ab20-fd6dc82138b3" name="Docker Deployment" url="http://localhost">
+        <fileTransfer mountedRoot="C:\Users\dmark\PhpstormProjects\INFT1206_Spring_Semester" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>
