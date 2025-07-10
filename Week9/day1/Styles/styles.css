@@ -156,3 +156,11 @@ button[type="submit"]:hover{
 .feedback-table tr:hover{
     background-color: #e0e0e0;
 }
+
+.form-container input[type="password"] {
+    margin-bottom: 10px;
+}
+
+.from-container button {
+    margin-top: 10px
+}

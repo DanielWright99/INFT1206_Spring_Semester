@@ -1,6 +1,6 @@
 <?php
 
-
+include '../includes/header.php';
 require_once '../includes/db_connect.php';
 
 $errors = [];
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
 
-<?php include '../includes/header.php'?>;
+
 
 <main>
     <section>
@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label for="username">Username:</label><br>
                 <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username)?>" required><br>
                 <label for="password">Password:</label><br>
-                <input type="text" id="password" name="password" required><br>
+                <input type="password" id="password" name="password" required><br>
                 <button type="submit">Register</button>
             </form>
         </div>
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </main>
 
 <footer>
-    <p>&copy; 2025 Daniel Wright. All rights reserved.</p>
+    <p> 2025 Daniel Wright. All rights reserved.</p>
 </footer>
 </body>
 </html>

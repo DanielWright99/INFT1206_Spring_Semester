@@ -1,5 +1,9 @@
 <?php
 
+include '../includes/header.php';
+
+require_once '../includes/db_connect.php';
+
 //Initialize variations for form processing
 $error = [];
 $success = "";
@@ -29,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($error)){
 
         //connect to database
-        $conn = pg_connect("host=host.docker.internal port=5432 dbname=port user=admin password=password");
+        $conn = get_db_connection();
         if(!$conn){
             $error[] = "Database connection failed";
         }else{
@@ -60,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 
 <body>
-<?php include '../includes/header.php';?>
+
 
 <main>
     <section>

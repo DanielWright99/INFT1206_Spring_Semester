@@ -1,4 +1,5 @@
 <?php
+include '../includes/header.php';
 $result = '';
 $errors = [];
 
@@ -85,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-<?php include '../includes/header.php';?>
+
 
 <main>
     <section>

@@ -1,3 +1,8 @@
+<?php
+
+include '../includes/header.php'; ?>
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +12,7 @@
     <link rel="stylesheet" href="../Styles/styles.css">
 </head>
 <body>
-<?php include '../includes/header.php';?>
+
 <main>
     <section id="home">
         <h2>Home</h2>

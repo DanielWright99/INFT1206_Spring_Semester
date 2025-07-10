@@ -1,4 +1,5 @@
 <?php
+include '../includes/header.php';
 //Define page title dynamically
 $pageTitle = "e-Business vs. Traditional Retail";
 ?>
@@ -12,7 +13,7 @@ $pageTitle = "e-Business vs. Traditional Retail";
     <link rel="stylesheet" href="../Styles/styles.css" >
 </head>
 <body>
-<?php include '../includes/header.php';?>
+
 <main>
     <section>
         <h2>Comparison of e-Business and Traditional Retail</h2>

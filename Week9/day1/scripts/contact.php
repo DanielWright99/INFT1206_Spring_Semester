@@ -1,4 +1,5 @@
  <?php
+ include '../includes/header.php';
      //Set timezone for accurate date/time display
  date_default_timezone_set('America/Toronto');
 
@@ -22,7 +23,7 @@ function formatContactInfo($email, $linkedIn, $gitlab){
      <link rel="stylesheet" href="../Styles/styles.css">
  </head>
  <body>
- <?php include '../includes/header.php';?>
+
  <main>
      <section>
          <h2>Contact Information</h2>

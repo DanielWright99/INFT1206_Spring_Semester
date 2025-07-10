@@ -1,5 +1,17 @@
 <?php
-$conn = pg_connect("host=host.docker.internal port=5432 dbname=port user=admin password=password");
+
+
+if(!isset($S_SESSION['user_id'])){
+    header("Location: login.php");
+    exit;
+}
+
+include '../includes/header.php';
+require_once '../includes/db_connect.php';
+
+
+
+$conn = get_db_connection();
 $feedbackData = [];
 if($conn){
     $query = "SELECT name, feedback, submitted_at FROM feedback ORDER BY submitted_at DESC";
@@ -21,7 +33,7 @@ if($conn){
     <link rel="stylesheet" href="../Styles/styles.css">
 </head>
 <body>
-<?php include '../includes/header.php';?>
+
 <main>
     <section>
         <h2>Feedback List</h2>
