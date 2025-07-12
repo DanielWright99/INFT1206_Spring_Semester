@@ -69,7 +69,7 @@ pg_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Profile - INFT 1206</title>
-    <link rel="stylesheet" href="../Styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 
     <script>
         function validateform() {

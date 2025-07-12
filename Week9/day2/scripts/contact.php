@@ -20,7 +20,7 @@ function formatContactInfo($email, $linkedIn, $gitlab){
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
      <title>Contact - INFT1206</title>
-     <link rel="stylesheet" href="../Styles/styles.css">
+     <link rel="stylesheet" href="../styles/styles.css">
  </head>
  <body>
 

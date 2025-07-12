@@ -6,7 +6,7 @@ include '../includes/header.php';?>
 <head>
     <meta charset="UTF-8">
     <title>Project Details - INFT1206</title>
-    <link rel="stylesheet" href="../Styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 
     <style>
         .highlight-cell{
