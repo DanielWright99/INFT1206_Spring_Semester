@@ -1,96 +1,131 @@
-/* General Page Styles */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Set default font, remove default margins add padding for the entire page */
+body{
+    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    color: #333;
-    background-color: #f9f9f9;
+    padding:20px;
+    background-color: #f4f4f4;
 }
 
-header, nav, main, section, footer {
+/* Style header with a dark background, white text, centered content and padding */
+header{
+    background-color: #5c5c5c;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/*Use flex (flexbox) to arrange links horizontally and center them.
+Flexbox is a CSS layout model that makes it easy to align and distribute items in a container
+display flex turns the unordered list into a flex container
+justify-content: center centers the list items horizontally within the conainer
+list-style: none remove the default bullet points
+padding: 0 removes default padding
+*/
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+/* Add spacing between navigation list items */
+nav ul li{
+    margin: 0 15px;
+}
+
+/* Style navigation links with white text and no underlines */
+nav ul li a {
+    color: white;
+    text-decoration: none;
+
+}
+
+/*
+Center the main content, max width of 900px, add margin, white background padding and subtitle shodow
+Grid is a CSS layout used to arrange sections in a matrix format
+'display': turn the main element into a grid container
+'grid-template-columns': create a single column layout
+'gap': adds spacing between items (Sections)
+*/
+main {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: white;
     padding: 20px;
-    max-width: 1000px;
-    margin: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h1, h2 {
-    color: #2c3e50;
+/* Add spacing below each section */
+section{
+    margin-bottom: 30px;
 }
 
-/* Flexbox Navigation */
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    background-color: #333;
-    padding: 15px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav a:hover {
-    text-decoration: underline;
-    color: #ffa500;
-}
-
-/* Table Styles */
+/* Ensure tables take full width, collapse borders for a clean look and top margin */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-th, td {
+/* Style table headers with a dark background and white text */
+table th, table td {
     border: 1px solid #ccc;
-    padding: 12px;
-    text-align: left;
+    padding: 8px;
+    text-align: center;
 }
 
-th {
-    background-color: #f0f0f0;
+/* Apply a light frey background to even numbered table rows for alternating colours */
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-tr:hover {
-    background-color: #f9f1e7;
+/* Highlight table rows on hover with a darker grey backgroun */
+table tr:hover {
+    background-color: #e0e0e0;
 }
 
-/* Footer Styles */
+/*  Style the certification table to be narrower and centered */
+.certification-table {
+    width: 70%;
+    margin: auto;
+}
+
+/* Ensure image scales properly without exceeding their container */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Center the footer text and use a muted color */
 footer {
     text-align: center;
-    background-color: #eee;
-    padding: 20px;
-    margin-top: 40px;
-    color: #555;
+    margin-top: 20px;
+    color: #666;
 }
 
 .php-content {
     background-color: #e6f3ff;
-    padding: 16px;
+    padding: 10px;
     border-radius: 5px;
-
 }
 
 .welcome-message {
     font-weight: bold;
     padding: 10px;
-    color: #333333;
+    color: #333;
 }
 
-.form-container{
-    padding:15px;
+.form-container {
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"], input[type="number"]{
     width: 200px;
     padding: 5px;
     margin: 5px 0;
@@ -98,7 +133,7 @@ input[type="text"], input[type="number"] {
     border-radius: 3px;
 }
 
-button[type="submit"] {
+button[type="submit"]{
     padding: 8px 15px;
     color: white;
     border: none;
@@ -107,11 +142,11 @@ button[type="submit"] {
     background-color: #333;
 }
 
-button[type="submit"]:hover{
+button[type="submit"]:hover {
     background-color: #555;
 }
 
-.conversion-result{
+.conversion-result {
     background-color: #e6f3ff;
     padding: 10px;
     margin-top: 10px;
@@ -121,35 +156,35 @@ button[type="submit"]:hover{
 .error-message{
     color: #d32f2f;
     padding: 5px;
-    margin: 5px;
+    margin: 5px 0;
 }
 
 .success-message{
     color: #388e3c;
     padding: 5px;
-    margin: 5px 0;
+    margin: 5px;
     background-color: #e8f5e9;
     border-radius: 3px;
 }
 
-.feedback-table {
+.feedback-table{
     width: 100%;
     margin: 0 auto;
     border-collapse: collapse;
 }
 
-.feedback-table td, .feedback-table th {
+.feedback-table td, .feedback-table th{
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
-.feedback-table th {
+.feedback-table th{
     background-color: #333;
     color: white;
 }
 
-.feedback-table tr:nth-child(even) {
+.feedback-table tr:nth-child(even){
     background-color: #f9f9f9;
 }
 
@@ -157,28 +192,31 @@ button[type="submit"]:hover{
     background-color: #e0e0e0;
 }
 
-.form-container input[type="password"] {
+.form-container input[type='password'] {
     margin-bottom: 10px;
 }
 
-.from-container button {
-    margin-top: 10px
+.form-container button {
+    margin-top: 10px;
 }
 
-.from-container input[type="email"] {
-    .from-container textarea {
-        margin-bottom: 10px;
-    }
+.form-container input[type='email'],
+.form-container textarea {
+    margin-bottom: 10px;
 }
 
 .feedback-table form button {
     background-color: #d32f2f;
-    padding: 3px 10px;
-    font-size: 0.9px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+
+.feedback-table form button:hover {
+    background-color: #b71c1c;
 }
 
 .feedback-table a {
-    color: #555555;
+    color: #333;
     text-decoration: none;
     margin-right: 10px;
 }
