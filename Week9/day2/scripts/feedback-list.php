@@ -4,7 +4,7 @@ include '../includes/header.php';
 
 require_once '../includes/db_connect.php';
 
-if(!isset($S_SESSION['user_id'])){
+if(!isset($_SESSION['user_id'])){
     header("Location: login.php");
     exit;
 }
