@@ -1,0 +1,16 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE users
+    ADD COLUMN email VARCHAR(255) UNIQUE,
+ADD COLUMN bio TEXT,
+ADD COLUMN role VARCHAR(50) DEFAULT 'user';
+
+UPDATE users SET role='admin' WHERE username='dingus';
+
+ALTER TABLE users
+    ADD COLUMN profile_picture VARCHAR(255);
