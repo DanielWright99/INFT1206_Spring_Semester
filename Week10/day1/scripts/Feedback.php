@@ -84,6 +84,64 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Feedback - INFT 1206</title>
     <link rel="stylesheet" href="../styles/styles.css" >
+
+    <script>
+        function validateForm() {
+
+            const feedback = document.getElementById('feedback').value;
+            if (feedback.length < 10) {
+                alert('Feedback must be at least 10 characters long.');
+                return false;
+            }
+            return true;
+        }
+            function submitForm(event) {
+                event.preventDefault();
+                if (!validateForm()) return;
+
+                const form = document.getElementById('feedback-form');
+                const formData = new FormData(form);
+
+                fetch('feedback.php', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Request-With' 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+
+                        const messageDiv = document.getElementById('form-messages');
+                        messageDiv.innerHTML = '';
+                        if (data.errors.length > 0) {
+                            data.errors.forEach(error => {
+                                const p = document.createElement('p');
+                                p.className = 'error-message';
+                                p.textContent = error;
+                                messageDiv.appendChild(p);
+                            });
+                        }
+
+                        if (Data.success) {
+                            const p = document.createElement('p');
+                            p.className = 'success-message';
+                            p.textContent = data.success;
+                            messageDiv.appendChild(p);
+                            form.reset();
+                        }
+
+                    })
+                    .catch(error => {
+                        const messageDiv = document.getElementById('form-messages');
+                        messageDiv.innerHTML = '<p class=error-message>An error occurred. Please try again</p>';
+                        console.error('[ERROR] Form Submission Error: ', error.message);
+                    });
+            }
+
+    </script>
+
+
 </head>
 
 <body>
@@ -94,16 +152,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <h2>Provide Feedback</h2>
         <p>Please share your feedback about the portfolio</p>
         <div class="form-container">
-            <?php if(!empty($errors)): ?>
-            <?php foreach ($errors as $error ):?>
-             <p class="error-message"><?php echo htmlspecialchars($error) ?></p>
-            <?php endforeach; ?>
-            <?php endif; ?>
+           <div id="form-messages"></div>
 
-            <?php if($success !== ""): ?>
-            <p class="success-message"> <?php echo htmlspecialchars($success)?></p>
-            <?php endif; ?>
-            <form method="post" action="Feedback.php">
+            <form id="feedback-form" method="post" action="Feedback.php" onsubmit="submitForm(event)">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+
                 <label for="name">Name:</label><br>
                 <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($name) ?>" required><br>
                 <label for="Feedback">Feedback:</label><br>
