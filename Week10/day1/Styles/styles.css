@@ -224,3 +224,23 @@ button[type="submit"]:hover {
 .feedback-table a:hover {
     text-decoration: underline;
 }
+
+.profile-picture, .nav-profile-picture {
+    max-width: 50px;
+    height: auto;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.nav-profile-picture{
+    max-width: 30px;
+}
+
+.form-container input[type="file"]{
+    padding: 0;
+}
+
+.form-container #search {
+    max-width: 500px;
+}

@@ -17,47 +17,64 @@ $username = $_SESSION['username'];
 $email = '';
 $bio = '';
 
+$profile_picture = '';
+
+if(!isset($_SESSION['csrf_token'])){
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 //Fetch current profile data
 $conn = get_db_connection();
-$query = 'SELECT email, bio FROM users WHERE id = $1';
+$query = 'SELECT email, bio, profile_picture FROM users WHERE id = $1';
 $result = pg_query_params($conn, $query, [$user_id]);
-if($row = pg_fetch_assoc($result)){
+if($result && pg_num_assoc($result) > 0){
     $email = $row['email'];
     $bio = $row['bio'];
+    $profile_picture = $row['profile_picture'] ?? '';
+}else{
+    $errors[] = 'Failed to fetch profile picture.';
 }
+
 pg_free_result($result);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $bio = isset($_POST['bio']) ? trim($_POST['bio']) : '';
 
-    if(empty($email)){
-        $errors[] = 'Email is required';
-    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        $errors[] = 'Invalid email format';
-    }
+   if(!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']){
+       $errors[] = "Invalid CSRF Token.";
+   }else {
 
-    if(strlen($bio) > 500){
-        $errors[] = 'Bio must be 500 characters or less';
-    }
 
-    if(empty($errors)){
-        $query = 'SELECT id FROM users WHERE email = $1 AND id = $2';
-        $result = pg_query_params($conn, $query, [$email, $user_id]);
-        if(pg_num_rows($result) > 0){
-            $errors[] = 'Email is already taken.';
-        }
-        pg_free_result($result);
-    }
-    if(empty($errors)){
-        $query = 'UPDATE users SET email = $1, bio = $2 WHERE id = $3';
-        $result = pg_query_params($conn, $query, [$email, $bio, $user_id]);
-        if($result){
-            $success = 'Profile updated successfully.';
-        }else{
-            $errors[] = 'Error updating profile.';
-        }
-    }
+       $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+       $bio = isset($_POST['bio']) ? trim($_POST['bio']) : '';
+
+       if (empty($email)) {
+           $errors[] = 'Email is required';
+       } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+           $errors[] = 'Invalid email format';
+       }
+
+       if (strlen($bio) > 500) {
+           $errors[] = 'Bio must be 500 characters or less';
+       }
+
+       if (empty($errors)) {
+           $query = 'SELECT id FROM users WHERE email = $1 AND id = $2';
+           $result = pg_query_params($conn, $query, [$email, $user_id]);
+           if (pg_num_rows($result) > 0) {
+               $errors[] = 'Email is already taken.';
+           }
+           pg_free_result($result);
+       }
+       if (empty($errors)) {
+           $query = 'UPDATE users SET email = $1, bio = $2 WHERE id = $3';
+           $result = pg_query_params($conn, $query, [$email, $bio, $user_id]);
+           if ($result) {
+               $success = 'Profile updated successfully.';
+           } else {
+               $errors[] = 'Error updating profile.';
+           }
+       }
+   }
 }
 pg_close($conn);
 ?>
@@ -93,6 +110,11 @@ pg_close($conn);
 
     <div class="form-container">
         <p><strong>Username: </strong><?php echo htmlspecialchars($username)?></p>
+        <?php if($profile_picture): ?>
+        <p><strong>Profile Picture</strong></p>
+        <img src="../images/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Picture" class="profile-picture">
+        <?php endif; ?>
+
         <?php if (!empty($errors)): ?>
             <?php foreach ($errors as $error): ?>
                 <p class="error-message"><?php echo htmlspecialchars($error)?></p>

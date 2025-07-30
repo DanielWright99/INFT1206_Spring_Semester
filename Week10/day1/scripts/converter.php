@@ -2,7 +2,7 @@
 
 include '../includes/header.php';
 
-$result = '';
+$conversionResult = '';
 $errors = [];
 
 
@@ -67,13 +67,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if( $number !== '' && $convert_to !== '' ) {
         $decimal = fromNumber($number, $_POST['base']);
         if($convert_to === 'binary') {
-            $result = toBinary($decimal);
+            $conversionResult = toBinary($decimal);
         } elseif($convert_to === 'hexadecimal') {
-            $result = toHex($decimal);
+            $rconversionResult = toHex($decimal);
         }else{
-            $result = $decimal;
+            $conversionResult = $decimal;
         }
-        $result = "Result: $result";
+        $conversionResult = "Result: $conversionResult";
     }
 }
 ?>
@@ -115,8 +115,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             </form>
             <!-- Display the conversion result -->
-            <?php if($result !== ''): ?>
-            <p class="conversion-result"><?php echo htmlspecialchars($result) ?></p>
+            <?php if($conversionResult !== ''): ?>
+            <p class="conversion-result"><?php echo htmlspecialchars($conversionResult) ?></p>
             <?php endif; ?>
         </div>
     </section>

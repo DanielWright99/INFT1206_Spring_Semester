@@ -1,7 +1,5 @@
 <?php
-
 include '../includes/header.php';
-
 require_once '../includes/db_connect.php';
 
 //Initialize variations for form processing
@@ -9,7 +7,6 @@ $error = [];
 $success = "";
 $name = "";
 $feedback = "";
-
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 //Generate CSRF Token
@@ -47,26 +44,49 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
             if($feedback_id){
                 $query = 'UPDATE feedback SET name = $1, feedback = $2 WHERE id = $3 AND user_id = $4';
-                $result = pg_query_params($conn, $query, [$name, $feedback, $feedback_id, $user_id]);
-                if($result){
+                $queryResult = pg_query_params($conn, $query, [$name, $feedback, $feedback_id, $user_id]);
+                if($queryResult){
                     $success = "Feedback updated successfully";
+                    $log_query ='INSERT INTO activity_logs (use_id, action, description, created_at) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)';
+                    $log_result = pg_query_params($conn, $log_query, [$user_id, 'feedback_update', 'User updated feedback ID', $feedback_id]);
+
+                    if(!$log_result){
+                        $errors[] = "Failed to log feedback update";
+                    }else{
+                        pg_free_result($log_result);
+                    }
+
+
+
+
                 }else{
                     $errors[] = "Failed to update feedback";
                 }
             } else {
                 $query = "INSERT INTO Feedback (Name, Feedback, user_id) VALUES ($1, $2, $3)";
-                $result = pg_query_params($conn, $query, [$name, $feedback, $user_id]);
-                if ($result) {
+                $queryResult = pg_query_params($conn, $query, [$name, $feedback, $user_id]);
+                if ($queryResult) {
                     $success = "Thank you for your feedback, " . htmlspecialchars($name) . "It has been saved";
                     $name = "";
                     $feedback = "";
-                } else {
-                    $error[] = "Failed to insert feedback";
-                }
-                pg_close($conn);
-            }
+                    $log_query = 'INSERT INTO activity_logs(user_id, action, description, created_at) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)';
+                    $log_result = pg_query_params($conn, $log_query, [$user_id, 'Feedback submit', 'User submitted feedback ID', $feedback_id]);
 
+                    if(!$log_result){
+                        $errors[] = 'Failed to log feedback submit';
+                    }else{
+                        pg_free_result($log_result);
+                    }
+                } else {
+                    $error[] = "Failed to save feedback";
+                }
+                if($queryResult){
+                    pg_free_result($queryResult);
+                }
+            }
+            pg_close($conn);
         }
+
         //If AJAX Request, return JSON response
         if(empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             header('Content-Type: application/json');
@@ -145,7 +165,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 
 <body>
-
 
 <main>
     <section>
